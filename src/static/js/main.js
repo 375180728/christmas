@@ -12,6 +12,7 @@ var currentLeft,
     nowX,
     nowY;
 
+
 // console.log(control);
 
 // control[0].addEventListener("touchstart", touchstart);
@@ -25,14 +26,17 @@ control[0].addEventListener("touchstart", touchstart);
 control[0].addEventListener("touchmove", touchmove);
 // }
 
+
+//获取手指点击起始位置
 function touchstart(event) {
     // console.log(currentLeft);
     startClientX = event.touches[0].clientX;
     startClientY = event.touches[0].clientY;
-    currentLeft = parseFloat(control.css("marginLeft"));
-    currentTop = parseFloat(control.css("marginTop"))
+    currentLeft = parseFloat(control.css("left"));
+    currentTop = parseFloat(control.css("top"))
 }
 
+//按住手指拖动目标
 function touchmove(event) {
     endClientX = event.touches[0].clientX;
     endClientY = event.touches[0].clientY;
@@ -57,49 +61,77 @@ function touchmove(event) {
     control.css("top", nowY);
 }
 
+//生成随机数
 function getRandom(n, m) {
     var c = m - n + 1;
     return Math.floor(Math.random() * c + n);
 }
 
-
+//显示小偷
 function showThief(num, dire) {
-    var str = "<div class='thief'></div>";
+    var str = "<div class='thief"+ dire +"' ></div>";
     var basic = 0;
     var per = innerWidth / 10;
+    var randomIndex;
+    var maxHeight,
+        maxWidth;
+
     for (var i = 0; i < num; i++) {
         $("body").append(str);
     }
-    $(".thief").each(function(index) {
-        var per = (innerWidth - 50) / 10;
-        var randomIndex = getRandom(0, 10);
-        $(this).css(dire, randomIndex * per);
-        console.log(randomIndex);
 
+    $(".thief" + dire).each(function(index) {
+        maxWidth = innerWidth - 50;
+        maxHeight = innerHeight - 50;
+        console.log(maxWidth);
+        console.log(maxHeight);
+        per = (innerWidth - 50) / 10;
+        randomIndex = getRandom(0, 10);
+        switch (dire) {
+            case "top":
+                $(this).css("left", randomIndex * per);
+                break;
+            case "left":
+                $(this).css("top", randomIndex * per);
+                break;
+            case "right":
+                $(this).css("top", randomIndex * per);
+                break;
+        }
     });
 
-    // setInterval(function() {
-    //     basic++;
-    //     $(".thief").each(function() {
-    //         $(this).css(dire, basic);
-    //         var maxWidth = innerWidth - parseInt($(this).css("width"));
-    //         console.log($(this).css("top"));
-    //         console.log(maxWidth);
-    //         console.log($(this).css("left"));
-    //         if (parseInt($(this).css("left")) > maxWidth - 1) {
-    //             $(this).remove();
-    //         }
-    //     })
-    //     control.css("left", 1000);
-    //     console.log(basic);
-    // }, 10)
+    setInterval(function() {
+        basic++;
+        $(".thief" + dire).each(function() {
+            $(this).css(dire, basic);
+            switch (dire) {
+                case "top":
+                    if (parseInt($(this).css(dire)) > maxHeight) {
+                        $(this).remove();
+                    }
+                    break;
+                case "left":
+                    if (parseInt($(this).css(dire)) > maxWidth) {
+                        $(this).remove();
+                    }
+
+                case "right":
+                    if (parseInt($(this).css("left")) < 0) {
+                        $(this).remove();
+                    }
+            }
+
+        })
+    }, 10)
 
 }
 
 
 
-// showThief(1, "left");
 showThief(3, "left");
+
+
+showThief(3, "top");
 
 // setInterval(showThief(5, "marginTop"), 5000);
 

@@ -126,15 +126,25 @@ body{
     position: absolute;
     width: 0.7rem;
     height: 0.7rem;
-    top: 0;
-    left: 0;
     background-color: red;
 }
 
-.thief{
+.thiefleft{
     position: absolute;
-    top: 1.0rem;
-    left: 1.0rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: black;
+}
+
+.thieftop{
+    position: absolute;
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: black;
+}
+
+.thiefright{
+    position: absolute;
     width: 0.5rem;
     height: 0.5rem;
     background-color: black;
