@@ -11,6 +11,8 @@ var currentLeft,
     maxY,
     nowX,
     nowY;
+var basicTop = -148,
+    basicLeft = -117;
 
 
 // console.log(control);
@@ -69,81 +71,96 @@ function getRandom(n, m) {
 
 //显示小偷
 function showThief(num, dire) {
-    var str = "<div class='thief"+ dire +"' ></div>";
-    var basic = 0;
-    var per = innerWidth / 10;
-    var randomIndex;
-    var maxHeight,
-        maxWidth;
+    var str = "<div class='thief" + dire + "' ><img src='../static/images/thief.png'></div>";
+    
+    var nowTop,
+        nowLeft;
+    
 
     for (var i = 0; i < num; i++) {
         $("body").append(str);
     }
 
+
+
     $(".thief" + dire).each(function(index) {
-        maxWidth = innerWidth - 50;
-        maxHeight = innerHeight - 50;
-        console.log(maxWidth);
-        console.log(maxHeight);
-        per = (innerWidth - 50) / 10;
-        randomIndex = getRandom(0, 10);
+    
+        var perWidth = 117;
+
+        var perHeight = 148;
+        var n = innerWidth / perWidth;
+        var m = innerHeight / perHeight;
+        console.log(innerWidth);
+        console.log(perWidth);
+        console.log(n);
+
+
+
+
         switch (dire) {
             case "top":
-                $(this).css("left", randomIndex * per);
+                thiefMove(basicTop, "top");
+                console.log(n);
+                randomIndex = getRandom(0, n - 2);
+                console.log(randomIndex);
+                nowLeft = perWidth * randomIndex;
+                console.log(nowLeft);
+                $(this).css("left", nowLeft);
                 break;
             case "left":
-                $(this).css("top", randomIndex * per);
+                thiefMove(basicLeft, "left");
+                randomIndex = getRandom(0, m - 2);
+                nowTop = perHeight * randomIndex;
+                $(this).css("top", nowTop);
                 break;
             case "right":
-                $(this).css("top", randomIndex * per);
+                thiefMove(basicLeft, "left");
+                randomIndex = getRandom(0,m - 2);
+                nowTop = perHeight * randomIndex;
+                $(this).css("top", nowTop);
                 break;
         }
+
+
+
+    })
+
+} 
+
+function thiefMove(num, dire){
+    setInterval(function(){
+        num ++;
+        $(".thief" + dire).each(function(index) {
+            $(this).css(dire, num);
+        });
+    },10)
+}
+ 
+
+function over(){
+    $(".over").css("display", "block");
+    $(".indexbg").css({
+        backgroundColor : "rgba(0,0,0,0.7)",
+        zIndex: "100"
     });
-
-    setInterval(function() {
-        basic++;
-        $(".thief" + dire).each(function() {
-            $(this).css(dire, basic);
-            switch (dire) {
-                case "top":
-                    if (parseInt($(this).css(dire)) > maxHeight) {
-                        $(this).remove();
-                    }
-                    break;
-                case "left":
-                    if (parseInt($(this).css(dire)) > maxWidth) {
-                        $(this).remove();
-                    }
-
-                case "right":
-                    if (parseInt($(this).css("left")) < 0) {
-                        $(this).remove();
-                    }
-            }
-
-        })
-    }, 10)
-
 }
 
+// over();
+
+// showThief(3, "left");
 
 
-showThief(3, "left");
-
-
-showThief(3, "top");
+showThief(5, "top");
+showThief(4, "left");
 
 // setInterval(showThief(5, "marginTop"), 5000);
 
-// function showTime() {
-//     var seconds = $(".seconds");
-//     var second = 0;
-//     setInterval(function() {
-//         seconds[0].innerHTML = second;
-//         second++;
-//         console.log(seconds);
-//     }, 1000);
-// }
+function showTime() {
+    var second = 0;
+    setInterval(function() {
+        second ++;
+    }, 1000);
+}
 
 
 

@@ -12,8 +12,9 @@ var port = 3300;
 // }));
 
 
-// app.use('/libs', express.static('src/libs'));
+app.use('/libs', express.static('src/libs'));
 app.use('/static', express.static('src/static'));
+
 
 routes(app, __dirname);
 

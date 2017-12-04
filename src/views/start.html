@@ -3,22 +3,43 @@
 <head>
     <title></title>
     <link rel="stylesheet" type="text/css" href="../static/style/style.css">
+    <script type="text/javascript">
+    (function(doc, win) {
+        var docEl = doc.documentElement,
+            resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+            recalc = function() {
+                var clientWidth = docEl.clientWidth;
+                if (!clientWidth) return;
+                if (clientWidth >= 640) {
+                    docEl.style.fontSize = '100px';
+                } else {
+                    docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+                }
+            };
+
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+    </script>
 </head>
 <body>
     <div class="main">
-        <ul class="music">
-            <li class="musicItem"></li>
-            <li class="musicItem"></li>
+        <ul class="voiceList">
+            <li class="voiceItem voice"></li>
+            <li class="voiceItem help"></li>
         </ul>
         <div class="logo">
-            
+            <img src="../static/images/logo.png">
         </div>
         <div class="btns">
-            <div class="startGame">
-                
+            <div class="start">
+                <a href="./index">
+                    <img src="../static/images/start.png">
+                </a>
             </div>
             <div class="rank">
-                
+                <img src="../static/images/rank.png">
             </div>
         </div>
     </div>
